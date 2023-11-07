@@ -1,5 +1,11 @@
+import { useSelector } from "react-redux";
 import CartItem from "./CartItem";
+
 export default function Cart() {
+
+  const carts = useSelector((state) => state.app.carts);
+
+  console.log('carts', carts)
 
   return (
     <div className="card">
@@ -8,7 +14,7 @@ export default function Cart() {
           alt=""
           src="https://cdn-icons-png.flaticon.com/512/732/732084.png"
         />
-        <div>Total: 0</div>
+        <div>Total: { carts.length }  </div>
       </div>
 
       <div className="cardTitle">

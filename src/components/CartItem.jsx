@@ -1,41 +1,48 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { changeQuantity, changeQuantityThunk, removeProduct } from "../redux/app.actions";
 
 export default function CartItem() {
   const carts = useSelector((state) => state.app.carts);
+  const dispatch = useDispatch()
 
+  function handleRemove(cartId) {
+    dispatch(removeProduct(cartId))
+  }
   return (
     <>
-      {carts.map((cart) => (
-        <React.Fragment key={cart.id}>
+      { carts.map((cart) => (
+        <React.Fragment key={ cart.id }>
           <div className="cardItem">
             <div className="cardItem_left">
               <div
                 className="cardItem_image"
-                style={{ backgroundColor: cart.color }}
+                style={ { backgroundColor: cart.color } }
               >
-                <img alt="" src={cart.image} />
+                <img alt="" src={ cart.image } />
               </div>
             </div>
             <div className="cardItem_right">
-              <div className="cardItem_name">{cart.name}</div>
-              <div className="cardItem_price">${cart.price}</div>
+              <div className="cardItem_name">{ cart.name }</div>
+              <div className="cardItem_price">${ cart.price }</div>
               <div className="cartItem_actions">
                 <div className="cartItem_count">
-                  <div 
+                  <div
                     className="cartItem_button"
                   >
                     -
                   </div>
-                  <div className="cartItem_number">1</div>
-                  <div 
+                  <div className="cartItem_number">{ cart.quantity }</div>
+                  <div
                     className="cartItem_button"
+                    onClick={ () => dispatch(changeQuantityThunk(cart.id, 'increment')) }
                   >
                     +
                   </div>
                 </div>
                 <div
                   className="carItem_remove"
+                  onClick={ () => handleRemove(cart.id) }
                 >
                   <img
                     alt=""
@@ -46,7 +53,7 @@ export default function CartItem() {
             </div>
           </div>
         </React.Fragment>
-      ))}
+      )) }
     </>
   );
 }
