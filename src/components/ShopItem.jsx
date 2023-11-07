@@ -1,28 +1,61 @@
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+// mock data
+import { mockData } from "../data";
+
+// actions
+import { addToCart } from "../redux/app.actions";
+
 export default function ShopItem() {
+  const dispatch = useDispatch();
+  const carts = useSelector((state) => state.app.carts);
+  const [products, setProducts] = React.useState([]);
+
+  React.useEffect(() => {
+    setProducts(mockData);
+  }, []);
+
+  function handleAddToCart(product) {
+    const payload = {
+      ...product,
+      quantity: 1
+    }
+    dispatch(addToCart(payload));
+  }
+
   return (
     <div className="shopItem">
-      <div
-        className="shopItem_image"
-        style={{ backgroundColor: "rgb(212, 215, 214)" }}
-      >
-        <img
-          alt=""
-          src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1315882/air-zoom-pegasus-36-mens-running-shoe-wide-D24Mcz-removebg-preview.png"
-        />
-      </div>
-      <div className="shopItem_name">Nike Air Zoom Pegasus 36</div>
-      <div className="shopItem_description">
-        The iconic Nike Air Zoom Pegasus 36 offers more cooling and mesh that
-        targets breathability across high-heat areas. A slimmer heel collar and
-        tongue reduce bulk, while exposed cables give you a snug fit at higher
-        speeds.
-      </div>
-      <div className="shopItem_bottom">
-        <div className="shopItem_price">$108.97</div>
-        <div className="shopItem_button">
-          <p>ADD TO CART</p>
-        </div>
-      </div>
+      {products.map((product) => {
+        const isExisted = carts.some(cart => cart.id === product.id)
+        
+        return (
+          <React.Fragment key={product.id}>
+            <div
+              className="shopItem_image"
+              style={{ backgroundColor: product.color }}
+            >
+              <img alt="" src={product.image} />
+            </div>
+            <div className="shopItem_name">{product.name}</div>
+            <div className="shopItem_description">{product.description}</div>
+            <div className="shopItem_bottom">
+              <div className="shopItem_price">${product.price}</div>
+              <div
+                style={{
+                  cursor: isExisted ? "not-allowed" : "default",
+                  opacity: isExisted ? 0.5 : 1,
+                }}
+                className="shopItem_button"
+                onClick={isExisted ? null : () => handleAddToCart(product)}
+              >
+                <p>ADD TO CART</p>
+              </div>
+            </div>
+            <br />
+          </React.Fragment>
+        )
+      })}
     </div>
   );
 }
