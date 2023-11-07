@@ -4,15 +4,6 @@ import { useSelector } from "react-redux";
 export default function CartItem() {
   const carts = useSelector((state) => state.app.carts);
 
-  console.log('carts: ', carts)
-
-
-  const deleteCartItem = (id) => {
-  };
-
-  const handleChangeQuality = (id, type) => {
-  }
-
   return (
     <>
       {carts.map((cart) => (
@@ -33,23 +24,18 @@ export default function CartItem() {
                 <div className="cartItem_count">
                   <div 
                     className="cartItem_button"
-                    onClick={() => handleChangeQuality(cart.id, 'decrement')}
                   >
                     -
                   </div>
-                  <div className="cartItem_number">{cart.quantity}</div>
+                  <div className="cartItem_number">1</div>
                   <div 
                     className="cartItem_button"
-                    onClick={() => handleChangeQuality(cart.id, 'increment')}
                   >
                     +
                   </div>
                 </div>
                 <div
                   className="carItem_remove"
-                  onClick={() => {
-                    deleteCartItem(cart.id);
-                  }}
                 >
                   <img
                     alt=""
