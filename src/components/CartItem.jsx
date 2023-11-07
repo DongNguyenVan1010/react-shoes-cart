@@ -1,20 +1,16 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { removeItem, setQuantityAsync } from "../redux/app.actions";
+import { useSelector } from "react-redux";
 
 export default function CartItem() {
   const carts = useSelector((state) => state.app.carts);
-  const dispatch = useDispatch();
 
   console.log('carts: ', carts)
 
 
   const deleteCartItem = (id) => {
-    dispatch(removeItem(id));
   };
 
   const handleChangeQuality = (id, type) => {
-    dispatch(setQuantityAsync(id, type));
   }
 
   return (

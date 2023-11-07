@@ -2,7 +2,16 @@ import * as appAction from './app.actions';
 
 const initialState = {
   isLoading: false,
-  carts: []
+  carts: [{
+    id: 1,
+    image:
+      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/1315882/air-zoom-pegasus-36-mens-running-shoe-wide-D24Mcz-removebg-preview.png",
+    name: "Nike Air Zoom Pegasus 36",
+    description:
+      "The iconic Nike Air Zoom Pegasus 36 offers more cooling and mesh that targets breathability across high-heat areas. A slimmer heel collar and tongue reduce bulk, while exposed cables give you a snug fit at higher speeds.",
+    price: 108.97,
+    color: "#e1e7ed",
+  },]
 }
 
 export const appReducer = (state = initialState, { type, payload }) => {
@@ -12,24 +21,6 @@ export const appReducer = (state = initialState, { type, payload }) => {
         ...state,
         isLoading: payload 
       }
-    case appAction.ADD_TO_CART: 
-      return {
-        ...state,
-        carts: [...state.carts, payload]
-      }
-
-    case appAction.REMOVE_ITEM:
-      return {
-        ...state,
-        carts: state.carts.filter(item => item.id !== payload)
-      }
-
-    case appAction.SET_QUANTITY: {
-      return {
-        ...state,
-        carts: payload
-      }
-    }
    
     default:
       return state;
