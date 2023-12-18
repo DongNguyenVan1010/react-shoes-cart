@@ -2,19 +2,16 @@ import React from "react";
 
 // mock data
 import { mockData } from "../data";
-import { useDispatch } from "react-redux";
-import { addProduct } from "../redux/app.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { addProduct, addProductThunk } from "../redux/app.actions";
 
 
 export default function ShopItem() {
   const [ products, setProducts ] = React.useState([]);
   const dispatch = useDispatch()
+  const carts = useSelector((state) => state.app.carts)
 
 
-
-  function handleAddProduct(product) {
-    dispatch(addProduct(product))
-  }
 
   React.useEffect(() => {
     setProducts(mockData);
@@ -38,7 +35,11 @@ export default function ShopItem() {
               <div
 
                 className="shopItem_button"
-                onClick={ () => handleAddProduct(product) }
+                onClick={ () => dispatch(addProductThunk(product)) }
+              // style={ {
+              //   opacity: isAdded ? 0.5 : 1,
+              //   cursor: isAdded ? 'not-allowed' : 'pointer',
+              // } }
               >
                 <p>ADD TO CART</p>
               </div>

@@ -33,12 +33,32 @@ export const changeQuantity = payload => ({
 export const changeQuantityThunk = (id, action) => (dispatch, getState) => {
   const clonedCart = JSON.parse(JSON.stringify(getState().app.carts))
   const index = clonedCart.findIndex(item => item.id === id)
-  if (!index) return -1;
+  // if (action === 'increment') {
+  //   clonedCart[ index ].quantity++;
+  //   dispatch(changeQuantity(clonedCart))
+  // }
+  // else {
 
-  if (action === 'increment') {
-    clonedCart[ index ].quantity++;
-    dispatch(changeQuantity(clonedCart))
+  //   clonedCart[ index ].quantity--;
+  //   dispatch(changeQuantity(clonedCart))
+  // }
+
+
+  action === 'increment' ? clonedCart[ index ].quantity++ : clonedCart[ index ].quantity--
+  if (clonedCart[ index ].quantity == 0) {
+    return dispatch(removeProduct(id))
   }
+  dispatch(changeQuantity(clonedCart))
+
+
 }
+
+export const addProductThunk = product => (dispatch, getState) => {
+  const isAdded = getState().app.carts.some(cart => cart.id == product.id)
+  !isAdded ? dispatch(addProduct(product)) : dispatch(changeQuantityThunk(product.id, 'increment'))
+
+
+}
+
 
 
