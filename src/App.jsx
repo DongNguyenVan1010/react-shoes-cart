@@ -1,5 +1,5 @@
-import Cart from "./components/cart";
 import ShopItemList from "./components/ShopItemList";
+import Cart from "./components/Cart"
 import "./style.css";
 
 function App() {
